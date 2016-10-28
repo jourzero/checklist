@@ -348,9 +348,12 @@ var a = false;var b=false;var c=false; var d = false;var e=false;var f=false;var
 		
 		// used vars: rt, ck, vt, vk, lnk,note
 			
-		data += (i+1) + ". <input type='checkbox' onclick='if($(\"rt-" + i + "\").disabled==true){$(\"rt-" + i + "\").disabled=\"\";$(\"lnk-" + i + "\").className=\"strike\";$(\"rt-" + i + "\").focus();}else{$(\"lnk-" + i + "\").className=\"list\";$(\"rt-" + i + "\").disabled=\"disabled\";}' id='ck-" + i + "'\/><a class='list' id='lnk-"+i+"'  href='javascript:void(0)' onclick='if($(\"ck-" + i + "\").checked==1){$(\"lnk-" + i + "\").className=\"list\";$(\"ck-" + i + "\").checked=0;$(\"rt-" + i + "\").disabled=\"disabled\";}else{$(\"lnk-" + i + "\").className=\"strike\";$(\"ck-" + i + "\").checked=1;$(\"rt-" + i + "\").disabled=\"\";$(\"rt-" + i + "\").focus();}'>" + lst[i] + "</a>&nbsp;&nbsp;&nbsp;";
-		
-		data += " &raquo; Vulnerable: <a href='javascript:void(0)' onclick='$(\"vkyes-" + i + "\").checked=\"1\";$(\"vt-" + i + "\").innerHTML=\"YES\"'><input type='radio' value='1' id='vkyes-" + i + "' name='vk-" + i + "'> YES</a>&nbsp;&nbsp; <a href='javascript:void(0)' onclick='$(\"vkno-" + i + "\").checked=\"1\";$(\"vt-" + i + "\").innerHTML=\"NO\"'><input type='radio' value='0' id='vkno-" + i + "' id='vkno-" + i + "' name='vk-" + i + "' checked='checked'> No  &#8212; <a class='note' id='note-"+i+"' href='javascript:void(0)' onclick='if($(\"rt-" + i + "\").style.display==\"block\"){$(\"rt-" + i + "\").style.display=\"none\";}else{$(\"rt-" + i + "\").style.display=\"block\"}$(\"rt-" + i + "\").focus();' title='Toggle note/result for this test to include it in report'>Result/Note:</a><br \/><textarea cols='100' rows='15' onkeyup='if(this.value.length>0){$(\"note-"+i+"\").innerHTML=\"Result/Note**\";}else{$(\"note-"+i+"\").innerHTML=\"Result/Note:\";}' id='rt-"+i+"' style='display:none' disabled='disabled'><\/textarea><span id='vt-"+i+"' style='display:none'><\/span><br\/>";
+		data += (i+1) + ". <input type='checkbox' onclick='if($(\"rt-" + i + "\").disabled==true){$(\"rt-" + i + "\").disabled=\"\";$(\"lnk-" + i + "\").className=\"strike\";$(\"rt-" + i + "\").focus();}else{$(\"lnk-" + i + "\").className=\"list\";$(\"rt-" + i + "\").disabled=\"disabled\";}' id='ck-" + i + "'\/><a class='list' id='lnk-"+i+"'  href='javascript:void(0)' onclick='if($(\"ck-" + i + "\").checked==1){$(\"lnk-" + i + "\").className=\"list\";$(\"ck-" + i + "\").checked=0;$(\"rt-" + i + "\").disabled=\"disabled\";}else{$(\"lnk-" + i + "\").className=\"strike\";$(\"ck-" + i + "\").checked=1;$(\"rt-" + i + "\").disabled=\"\";$(\"rt-" + i + "\").focus();}'>" + lst[i] + "</a>&nbsp;&nbsp;&nbsp;";		
+		data += " &raquo; Vulnerable: <a href='javascript:void(0)' onclick='$(\"vkyes-" + i + "\").checked=\"1\";$(\"vt-" + i + "\").innerHTML=\"YES\"'><input type='radio' value='1' id='vkyes-" + i + "' name='vk-"    + i + "' /> YES</a>&nbsp;&nbsp; ";
+                data +=                      "<a href='javascript:void(0)' onclick='$(\"vkno-"  + i + "\").checked=\"1\";$(\"vt-" + i + "\").innerHTML=\"NO\"'><input  type='radio' value='0' id='vkno-"  + i + "'   id='vkno-"  + i + "' name='vk-" + i + "' /> No </a>";
+                data +=                      "<a href='javascript:void(0)' onclick='$(\"vktbd-" + i + "\").checked=\"1\";$(\"vt-" + i + "\").innerHTML=\"TBD\"'><input type='radio' value='2' id='vktbd-" + i + "'   id='vktbd-" + i + "' name='vk-" + i + "' checked='checked' /> TBD </a>";
+                data += "&#8212; <a class='note' id='note-"+i+"' href='javascript:void(0)' onclick='if($(\"rt-" + i + "\").style.display==\"block\"){$(\"rt-" + i + "\").style.display=\"none\";}else{$(\"rt-" + i + "\").style.display=\"block\"}$(\"rt-" + i + "\").focus();' title='Toggle note/result for this test to include it in report'>Result/Note:</a><br \/>";
+                data += "<textarea cols='100' rows='15' onkeyup='if(this.value.length>0){$(\"note-"+i+"\").innerHTML=\"Result/Note**\";}else{$(\"note-"+i+"\").innerHTML=\"Result/Note:\";}' id='rt-"+i+"' style='display:none' disabled='disabled'><\/textarea><span id='vt-"+i+"' style='display:none'><\/span><br\/>";
 	}
 	
 	ck.innerHTML = data;
@@ -482,15 +485,19 @@ function report()
 
 		if (!document.getElementsByTagName("textarea")[j].disabled)
 		{
-			var isvul = '<span style="font-weight:bold;';
-			if ($('vt-' + j ).innerHTML=='YES')
+			var isvul = '';
+			if (($('vt-' + j )) && ($('vt-' + j ).innerHTML==='YES') )
 			{
-				isvul += 'color:red">YES</span>';
+				isvul = '<br/>Vulnerable? <span style="font-weight:bold;color:red">YES</span><br/>';		
 				flawno+=1;
 			}
-			else 
+			else if (($('vt-' + j )) && ($('vt-' + j ).innerHTML==='NO') )
 			{
-				isvul += '">NO</span>';
+				isvul = '<br/>Vulnerable? <span style="font-weight:bold;">NO</span><br/>';
+			}
+			else
+			{
+				isvul = '<span></span>';
 			}
 		
 		switch(key[lst[j]])
@@ -534,7 +541,8 @@ function report()
 		}		
 
 					
-			details += '<a name="test-' + (j+1) + '"></a>Test ' + (j+1) + '. <span style="font-weight:bold;">' + lst[j] + '</span><br />Vulnerable? ' + isvul +'<br \/>';
+			//details += '<a name="test-' + (j+1) + '"></a>Test ' + (j+1) + '. <span style="font-weight:bold;">' + lst[j] + '</span><br />Vulnerable? ' + isvul +'<br \/>';
+			details += '<a name="test-' + (j+1) + '"></a>Test ' + (j+1) + '. <span style="font-weight:bold;">' + lst[j] + '</span>' + isvul;
 			if (document.getElementsByTagName("textarea")[j].value.length!=0)
 			{
 				var res = document.getElementsByTagName("textarea")[j].value;
