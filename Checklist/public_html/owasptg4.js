@@ -280,7 +280,7 @@ var a = false;var b=false;var c=false; var d = false;var e=false;var f=false;var
 		// used vars: rt, ck, vt, vk, lnk,note
 
                 var checked = function(){if(localStorage.getItem("ck-"+i)==="true"){return "checked"}else{return ""};}();
-		data += (i+1) + ". <input type='checkbox' onclick='localStorage.setItem(\"ck-" + i + "\", $(\"ck-" + i + "\").checked);getstatus();' id='ck-" + i + "' " + checked + " /><span>" + lst[i] + checked + "</span>";
+		data += (i+1) + ". <input type='checkbox' onclick='localStorage.setItem(\"ck-" + i + "\", $(\"ck-" + i + "\").checked);getstatus();' id='ck-" + i + "' " + checked + " /><span>" + lst[i] + "</span>";
                 data += "<br\/>";
 	}
 	

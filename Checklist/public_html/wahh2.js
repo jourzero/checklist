@@ -165,7 +165,7 @@ var h = false;var i = false;
                 data += "<textarea cols='100' rows='15' onkeyup='if(this.value.length>0){$(\"note-"+i+"\").innerHTML=\"Result/Note**\";}else{$(\"note-"+i+"\").innerHTML=\"Result/Note:\";}' id='rt-"+i+"' style='display:none' disabled='disabled'><\/textarea><span id='vt-"+i+"' style='display:none'><\/span><br\/>";
                 */
                 var checked = function(){if(localStorage.getItem("ck-"+i)==="true"){return "checked"}else{return ""};}();
-		data += (i+1) + ". <input type='checkbox' onclick='localStorage.setItem(\"ck-" + i + "\", $(\"ck-" + i + "\").checked);getstatus();' id='ck-" + i + "' " + checked + " /><span>" + lst[i] + checked + "</span>";
+		data += (i+1) + ". <input type='checkbox' onclick='localStorage.setItem(\"ck-" + i + "\", $(\"ck-" + i + "\").checked);getstatus();' id='ck-" + i + "' " + checked + " /><span>" + lst[i] + "</span>";
                 data += "<br\/>";               
 	}
 	
